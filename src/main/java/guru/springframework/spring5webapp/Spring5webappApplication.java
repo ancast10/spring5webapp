@@ -1,12 +1,37 @@
 package guru.springframework.spring5webapp;
 
+import guru.springframework.spring5webapp.controller.ConstructorInjectedController;
+import guru.springframework.spring5webapp.controller.MyController;
+import guru.springframework.spring5webapp.controller.PropertyInjectedController;
+import guru.springframework.spring5webapp.controller.SetterInjectedController;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 
 @SpringBootApplication
 public class Spring5webappApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Spring5webappApplication.class, args);
+		ApplicationContext applicationContext = SpringApplication.run(Spring5webappApplication.class, args);
+
+		MyController myController =(MyController) applicationContext.getBean("myController");
+
+		System.out.println("--------Primary bean----------");
+		System.out.println(myController.sayHello());
+
+		System.out.println("--------Property----------");
+		PropertyInjectedController propertyInjectedController =
+				(PropertyInjectedController) applicationContext.getBean("propertyInjectedController");
+		System.out.println(propertyInjectedController.getGreeting());
+
+		System.out.println("--------Setter----------");
+		SetterInjectedController setterInjectedController = (SetterInjectedController) applicationContext.getBean(
+				"setterInjectedController");
+		System.out.println(setterInjectedController.getGreeting());
+
+		System.out.println("--------Constructor----------");
+		ConstructorInjectedController constructorInjectedController =
+				(ConstructorInjectedController) applicationContext.getBean("constructorInjectedController");
+		System.out.println(constructorInjectedController.getGreeting());
 	}
 }
